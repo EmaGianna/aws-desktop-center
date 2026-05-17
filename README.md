@@ -100,13 +100,13 @@ Si las credenciales temporales expiran, la app muestra un mensaje indicando que 
 
 ## Ventajas
 
-- Binario ~60MB (vs ~150MB Electron)
-- RAM ~30-50MB (vs ~200MB Electron)
+- Binario standalone ~60MB
+- Bajo consumo de RAM (~30-50MB)
 - Startup instantáneo
 - Sin Node.js como dependencia
 - Credenciales nunca salen de la máquina local
 
 ## Desarrollo asistido por IA
 
-Este proyecto fue desarrollado con la asistencia de **Kiro CLI** (AWS), un agente de IA para desarrollo de software.  
-La arquitectura, el código, las decisiones de diseño y la iteración sobre la UI fueron realizadas en colaboración humano-IA.
+Este proyecto fue ideado, diseñado y dirigido por su autor.  
+La implementación del código fue asistida por **Kiro CLI** (AWS), un agente de IA para desarrollo de software, utilizado como herramienta de productividad durante el proceso de construcción.
