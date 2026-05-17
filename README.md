@@ -3,6 +3,14 @@
 Aplicación de escritorio estilo Kodi para gestionar servicios de datos en AWS.  
 Desarrollada con **Tauri 2 + Rust** (backend) y **Vanilla JS** (frontend).
 
+## Screenshots
+
+![Profile Selection](img/AWS%20Data%20Center%20(Ubuntu)%20-start.png)
+*Profile selection screen — reads profiles from ~/.aws/credentials*
+
+![Main Menu](img/AWS%20Data%20Center%20(Ubuntu)%20-%20main_menu.png)
+*Main menu — Kodi-style tile navigation for all AWS data services*
+
 ## Servicios soportados
 
 | Servicio | Funcionalidades |

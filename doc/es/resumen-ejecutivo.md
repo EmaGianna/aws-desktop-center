@@ -26,6 +26,12 @@ AWS Data Center consolida 10 servicios de datos de AWS en una única aplicación
 
 ### Características Principales
 
+![Selección de Perfil](../../img/AWS%20Data%20Center%20(Ubuntu)%20-start.png)
+*Pantalla de selección de perfil*
+
+![Menú Principal](../../img/AWS%20Data%20Center%20(Ubuntu)%20-%20main_menu.png)
+*Menú principal con tiles de servicios*
+
 | Capacidad | Descripción |
 |-----------|-------------|
 | Multi-servicio | S3, DynamoDB, RDS, Redshift, Glue, Athena, Lambda, CloudWatch, EventBridge, Lake Formation |
