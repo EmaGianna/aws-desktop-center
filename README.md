@@ -42,6 +42,8 @@ chmod +x bin/aws-data-center
 ./bin/aws-data-center
 ```
 
+> **Nota para WSL2/WSLg**: Se recomienda usar el binario de `bin/` en lugar del AppImage, ya que este último puede presentar problemas con el cursor del mouse debido a conflictos con las librerías GTK embebidas en WSLg. En Linux nativo de escritorio, el AppImage funciona correctamente.
+
 ## Compilar desde fuente
 
 ```bash
