@@ -128,3 +128,11 @@ Si las credenciales temporales expiran, la app muestra un mensaje indicando que 
 
 Este proyecto fue ideado, diseñado y dirigido por su autor.  
 La implementación del código fue asistida por **Kiro CLI** (AWS), un agente de IA para desarrollo de software, utilizado como herramienta de productividad durante el proceso de construcción.
+
+## Visión
+
+AWS Data Center aspira a ser una alternativa open source y liviana a [Commandeer](https://getcommandeer.com/), enfocada en servicios de datos. La estrategia es crear aplicaciones por dominio (Data, Compute, Networking, etc.) para mantener cada app pequeña, rápida y enfocada en un nicho específico de IT.
+
+## Licencia
+
+[MIT](LICENSE)
