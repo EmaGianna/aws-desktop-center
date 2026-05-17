@@ -1,0 +1,25 @@
+{
+  "productName": "AWS_Data_Center",
+  "version": "0.1.0",
+  "identifier": "com.awsdatacenter.rust",
+  "build": {
+    "frontendDist": "./ui"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "AWS Data Center",
+        "width": 1280,
+        "height": 720,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ],
+    "withGlobalTauri": true
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["appimage"],
+    "icon": ["icons/icon.png"]
+  }
+}
