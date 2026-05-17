@@ -106,6 +106,14 @@ Si las credenciales temporales expiran, la app muestra un mensaje indicando que 
 - Sin Node.js como dependencia
 - Credenciales nunca salen de la máquina local
 
+## Documentación / Documentation
+
+| | English | Español |
+|--|---------|---------|
+| Executive Summary | [executive-summary.md](doc/en/executive-summary.md) | [resumen-ejecutivo.md](doc/es/resumen-ejecutivo.md) |
+| Functional Docs | [functional-documentation.md](doc/en/functional-documentation.md) | [documentacion-funcional.md](doc/es/documentacion-funcional.md) |
+| Technical Docs | [technical-documentation.md](doc/en/technical-documentation.md) | [documentacion-tecnica.md](doc/es/documentacion-tecnica.md) |
+
 ## Desarrollo asistido por IA
 
 Este proyecto fue ideado, diseñado y dirigido por su autor.  
