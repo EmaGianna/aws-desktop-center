@@ -1,3 +1,5 @@
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
 mod aws_services;
 
 use aws_services::{athena, cloudwatch, dynamodb, eventbridge, glue, lakeformation, lambda, profiles, rds, redshift, s3};
