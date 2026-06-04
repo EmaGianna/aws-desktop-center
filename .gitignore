@@ -1,1 +1,7 @@
 /target
+.env
+*.pem
+*.key
+.aws/
+.idea/
+.vscode/
