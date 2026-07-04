@@ -1,6 +1,6 @@
 use super::load_config;
+use super::s3::create_s3_client;
 use aws_sdk_glue::Client;
-use aws_sdk_s3::Client as S3Client;
 use serde::Serialize;
 use std::collections::HashMap;
 
@@ -201,8 +201,7 @@ pub async fn glue_start_crawler(profile: String, crawler_name: String) -> Result
 #[tauri::command]
 pub async fn glue_get_job_script(profile: String, script_location: String) -> Result<String, String> {
     // script_location is like s3://bucket/path/to/script.py
-    let config = load_config(&profile).await;
-    let s3_client = S3Client::new(&config);
+    let s3_client = create_s3_client(&profile).await;
 
     let location = script_location.strip_prefix("s3://").ok_or("Invalid S3 path")?;
     let (bucket, key) = location.split_once('/').ok_or("Invalid S3 path format")?;

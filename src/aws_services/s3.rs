@@ -1,9 +1,23 @@
-use super::load_config;
+use super::{load_config, is_emulated};
 use aws_sdk_s3::Client;
+use aws_sdk_s3::config::Builder as S3ConfigBuilder;
 use aws_sdk_s3::presigning::PresigningConfig;
 use serde::Serialize;
 use std::collections::HashMap;
 use std::time::Duration;
+
+/// Creates an S3 client. Uses path-style addressing for emulated endpoints.
+pub async fn create_s3_client(profile: &str) -> Client {
+    let config = load_config(profile).await;
+    if is_emulated(profile) {
+        let s3_config = S3ConfigBuilder::from(&config)
+            .force_path_style(true)
+            .build();
+        Client::from_conf(s3_config)
+    } else {
+        Client::new(&config)
+    }
+}
 
 #[derive(Serialize)]
 pub struct Bucket {
@@ -52,8 +66,7 @@ pub struct SearchResult {
 
 #[tauri::command]
 pub async fn list_buckets(profile: String) -> Result<Vec<Bucket>, String> {
-    let config = load_config(&profile).await;
-    let client = Client::new(&config);
+    let client = create_s3_client(&profile).await;
     let resp = client.list_buckets().send().await.map_err(|e| e.to_string())?;
     Ok(resp.buckets().iter().map(|b| Bucket {
         name: b.name().unwrap_or_default().to_string(),
@@ -63,8 +76,7 @@ pub async fn list_buckets(profile: String) -> Result<Vec<Bucket>, String> {
 
 #[tauri::command]
 pub async fn list_objects(profile: String, bucket: String, prefix: String) -> Result<ListObjectsResult, String> {
-    let config = load_config(&profile).await;
-    let client = Client::new(&config);
+    let client = create_s3_client(&profile).await;
     let resp = client.list_objects_v2()
         .bucket(&bucket)
         .prefix(&prefix)
@@ -88,8 +100,7 @@ pub async fn list_objects(profile: String, bucket: String, prefix: String) -> Re
 
 #[tauri::command]
 pub async fn get_object_detail(profile: String, bucket: String, key: String) -> Result<ObjectDetail, String> {
-    let config = load_config(&profile).await;
-    let client = Client::new(&config);
+    let client = create_s3_client(&profile).await;
 
     let head = client.head_object().bucket(&bucket).key(&key)
         .send().await.map_err(|e| e.to_string())?;
@@ -114,8 +125,7 @@ pub async fn get_object_detail(profile: String, bucket: String, key: String) -> 
 
 #[tauri::command]
 pub async fn generate_presigned_url(profile: String, bucket: String, key: String, expiry_secs: u64) -> Result<String, String> {
-    let config = load_config(&profile).await;
-    let client = Client::new(&config);
+    let client = create_s3_client(&profile).await;
     let presign_config = PresigningConfig::expires_in(Duration::from_secs(expiry_secs))
         .map_err(|e| e.to_string())?;
     let req = client.get_object().bucket(&bucket).key(&key)
@@ -125,8 +135,7 @@ pub async fn generate_presigned_url(profile: String, bucket: String, key: String
 
 #[tauri::command]
 pub async fn search_objects(profile: String, bucket: String, prefix: String, query: String, max_results: i32) -> Result<SearchResult, String> {
-    let config = load_config(&profile).await;
-    let client = Client::new(&config);
+    let client = create_s3_client(&profile).await;
     let query_lower = query.to_lowercase();
 
     let mut all_objects = Vec::new();
@@ -170,8 +179,7 @@ pub async fn search_objects(profile: String, bucket: String, prefix: String, que
 
 #[tauri::command]
 pub async fn upload_object(profile: String, bucket: String, key: String, file_path: String) -> Result<String, String> {
-    let config = load_config(&profile).await;
-    let client = Client::new(&config);
+    let client = create_s3_client(&profile).await;
     let body = aws_sdk_s3::primitives::ByteStream::from_path(&file_path).await.map_err(|e| e.to_string())?;
     client.put_object()
         .bucket(&bucket)
@@ -183,8 +191,7 @@ pub async fn upload_object(profile: String, bucket: String, key: String, file_pa
 
 #[tauri::command]
 pub async fn download_object(profile: String, bucket: String, key: String, dest_path: String) -> Result<String, String> {
-    let config = load_config(&profile).await;
-    let client = Client::new(&config);
+    let client = create_s3_client(&profile).await;
     let resp = client.get_object().bucket(&bucket).key(&key)
         .send().await.map_err(|e| e.to_string())?;
     let bytes = resp.body.collect().await.map_err(|e| e.to_string())?;
@@ -194,8 +201,7 @@ pub async fn download_object(profile: String, bucket: String, key: String, dest_
 
 #[tauri::command]
 pub async fn delete_object(profile: String, bucket: String, key: String) -> Result<String, String> {
-    let config = load_config(&profile).await;
-    let client = Client::new(&config);
+    let client = create_s3_client(&profile).await;
     client.delete_object().bucket(&bucket).key(&key)
         .send().await.map_err(|e| e.to_string())?;
     Ok(format!("Deleted s3://{}/{}", bucket, key))
@@ -203,8 +209,7 @@ pub async fn delete_object(profile: String, bucket: String, key: String) -> Resu
 
 #[tauri::command]
 pub async fn copy_object(profile: String, source_bucket: String, source_key: String, dest_bucket: String, dest_key: String) -> Result<String, String> {
-    let config = load_config(&profile).await;
-    let client = Client::new(&config);
+    let client = create_s3_client(&profile).await;
     let copy_source = format!("{}/{}", source_bucket, source_key);
     client.copy_object()
         .bucket(&dest_bucket)

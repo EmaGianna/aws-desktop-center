@@ -668,3 +668,16 @@ tr:hover td { background: rgba(233,69,96,0.05); }
   text-align: center;
   line-height: 1.8;
 }
+
+/* Emulated environment badge */
+.emulated-badge {
+  display: block;
+  margin-top: 0.4rem;
+  padding: 0.2rem 0.5rem;
+  background: rgba(255, 152, 0, 0.15);
+  border: 1px solid #ff9800;
+  border-radius: 4px;
+  font-size: 0.6rem;
+  color: #ff9800;
+  word-break: break-all;
+}

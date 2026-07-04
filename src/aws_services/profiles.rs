@@ -1,4 +1,13 @@
+use super::get_endpoint_url;
+use serde::Serialize;
 use std::fs;
+
+#[derive(Serialize)]
+pub struct ProfileInfo {
+    pub name: String,
+    pub endpoint_url: String,
+    pub is_emulated: bool,
+}
 
 #[tauri::command]
 pub fn get_profiles() -> Vec<String> {
@@ -20,4 +29,14 @@ pub fn get_profiles() -> Vec<String> {
         }
     }
     profiles
+}
+
+#[tauri::command]
+pub fn get_profile_info(profile: String) -> ProfileInfo {
+    let endpoint = get_endpoint_url(&profile);
+    ProfileInfo {
+        name: profile,
+        is_emulated: endpoint.is_some(),
+        endpoint_url: endpoint.unwrap_or_default(),
+    }
 }

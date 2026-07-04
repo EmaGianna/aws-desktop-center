@@ -8,6 +8,7 @@ fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             profiles::get_profiles,
+            profiles::get_profile_info,
             s3::list_buckets,
             s3::list_objects,
             s3::get_object_detail,

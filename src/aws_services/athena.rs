@@ -1,6 +1,6 @@
 use super::load_config;
+use super::s3::create_s3_client;
 use aws_sdk_athena::Client;
-use aws_sdk_s3::Client as S3Client;
 use aws_sdk_s3::presigning::PresigningConfig;
 use serde::Serialize;
 use std::time::Duration;
@@ -151,8 +151,7 @@ pub async fn get_results(profile: String, query_execution_id: String) -> Result<
 
 #[tauri::command]
 pub async fn athena_download_results(profile: String, output_location: String, dest_path: String) -> Result<String, String> {
-    let config = load_config(&profile).await;
-    let s3_client = S3Client::new(&config);
+    let s3_client = create_s3_client(&profile).await;
     // output_location is like s3://bucket/path/query-id.csv
     let location = output_location.strip_prefix("s3://").ok_or("Invalid S3 path")?;
     let (bucket, key) = location.split_once('/').ok_or("Invalid S3 path format")?;
@@ -165,8 +164,7 @@ pub async fn athena_download_results(profile: String, output_location: String, d
 
 #[tauri::command]
 pub async fn athena_generate_results_link(profile: String, output_location: String, expiry_secs: u64) -> Result<String, String> {
-    let config = load_config(&profile).await;
-    let s3_client = S3Client::new(&config);
+    let s3_client = create_s3_client(&profile).await;
     let location = output_location.strip_prefix("s3://").ok_or("Invalid S3 path")?;
     let (bucket, key) = location.split_once('/').ok_or("Invalid S3 path format")?;
     let presign_config = PresigningConfig::expires_in(Duration::from_secs(expiry_secs))

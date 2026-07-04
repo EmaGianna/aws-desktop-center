@@ -15,7 +15,7 @@ const SERVICES = [
   { id: 'lakeformation', name: 'Lake Formation', icon: 'glue', description: 'Data Governance' },
 ];
 
-let state = { profile: null, activeService: null };
+let state = { profile: null, activeService: null, profileInfo: null };
 
 function icon(name, cls = 'icon') {
   return `<span class="${cls}">${ICONS[name] || ''}</span>`;
@@ -39,15 +39,21 @@ function renderProfileSelector(profiles) {
       </div>
     </div>`;
   document.querySelectorAll('.profile-btn').forEach(btn => {
-    btn.onclick = () => { state.profile = btn.dataset.profile; renderApp(); };
+    btn.onclick = async () => {
+      state.profile = btn.dataset.profile;
+      state.profileInfo = await invoke('get_profile_info', { profile: state.profile });
+      renderApp();
+    };
   });
 }
 
 function renderApp() {
+  const profileInfo = state.profileInfo || {};
+  const emulatedBadge = profileInfo.is_emulated ? `<span class="emulated-badge">EMULATED: ${profileInfo.endpoint_url}</span>` : '';
   document.getElementById('root').innerHTML = `
     <div class="app-container">
       <nav class="sidebar">
-        <div class="sidebar-header"><h2>AWS Data Center</h2><span class="profile-badge">${state.profile}</span></div>
+        <div class="sidebar-header"><h2>AWS Data Center</h2><span class="profile-badge">${state.profile}</span>${emulatedBadge}</div>
         <ul class="sidebar-menu">
           ${SERVICES.map(s => `<li class="sidebar-item ${state.activeService === s.id ? 'active' : ''}" data-id="${s.id}">${icon(s.icon, 'icon-sm')} <span>${s.name}</span></li>`).join('')}
         </ul>
