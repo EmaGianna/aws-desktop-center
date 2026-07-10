@@ -1,6 +1,6 @@
 # Documentación Técnica
 
-## AWS Data Center — Arquitectura y Referencia Técnica
+## AWS Desktop Center — Arquitectura y Referencia Técnica
 
 ### Arquitectura General
 
@@ -36,7 +36,7 @@
 ### Estructura del Proyecto
 
 ```
-aws-data-center/
+aws-desktop-center/
 ├── Cargo.toml              # Dependencias Rust y metadata del proyecto
 ├── Cargo.lock              # Versiones de dependencias bloqueadas
 ├── build.rs                # Script de build de Tauri
@@ -65,8 +65,8 @@ aws-data-center/
 │   ├── styles.css           # Estilos dark theme
 │   └── icons.js             # Definiciones de íconos SVG
 ├── bin/
-│   ├── aws-data-center      # Binario precompilado (Linux x86_64)
-│   └── aws-data-center.exe  # Binario precompilado (Windows x86_64)
+│   ├── aws-desktop-center      # Binario precompilado (Linux x86_64)
+│   └── aws-desktop-center.exe  # Binario precompilado (Windows x86_64)
 └── doc/
     ├── en/                   # Documentación en inglés
     └── es/                   # Documentación en español
@@ -181,13 +181,13 @@ cargo run
 #### Build Release
 ```bash
 cargo build --release
-# Binario: target/release/aws-data-center (Linux) o aws-data-center.exe (Windows)
+# Binario: target/release/aws-desktop-center (Linux) o aws-desktop-center.exe (Windows)
 ```
 
 #### AppImage (Linux portable)
 ```bash
 cargo tauri build
-# Output: target/release/bundle/appimage/AWS_Data_Center_0.1.0_amd64.AppImage
+# Output: target/release/bundle/appimage/AWS_Desktop_Center_0.1.0_amd64.AppImage
 ```
 
 ### Soporte de Plataformas

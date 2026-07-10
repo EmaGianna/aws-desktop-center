@@ -1,10 +1,10 @@
 # Resumen Ejecutivo
 
-## AWS Data Center — Aplicación de Escritorio para Servicios de Datos en AWS
+## AWS Desktop Center — Aplicación de Escritorio para Servicios de Datos en AWS
 
 ### Descripción General
 
-AWS Data Center es una aplicación de escritorio liviana que proporciona una interfaz visual estilo Kodi para gestionar servicios de datos en AWS. Permite a ingenieros de datos, analistas y equipos DevOps interactuar con recursos de AWS a través de una interfaz gráfica intuitiva, eliminando la necesidad de alternar entre múltiples pestañas del navegador o memorizar comandos CLI.
+AWS Desktop Center es una aplicación de escritorio liviana que proporciona una interfaz visual estilo Kodi para gestionar servicios de datos en AWS. Permite a ingenieros de datos, analistas y equipos DevOps interactuar con recursos de AWS a través de una interfaz gráfica intuitiva, eliminando la necesidad de alternar entre múltiples pestañas del navegador o memorizar comandos CLI.
 
 ### Problema
 
@@ -17,7 +17,7 @@ Esto genera fricción en los flujos de trabajo diarios, especialmente para equip
 
 ### Solución
 
-AWS Data Center consolida 10 servicios de datos de AWS en una única aplicación de escritorio rápida con:
+AWS Desktop Center consolida 10 servicios de datos de AWS en una única aplicación de escritorio rápida con:
 - **Navegación unificada** — Todos los servicios accesibles desde un sidebar
 - **Exploración visual** — UI basada en tiles para navegar recursos
 - **Acciones rápidas** — Upload, download, query, invoke y gestión directa de recursos

@@ -1,0 +1,8 @@
+* text eol=crlf
+
+*.png -text
+*.ico -text
+*.icns -text
+*.jpg -text
+*.jpeg -text
+*.gif -text

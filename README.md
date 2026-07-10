@@ -1,4 +1,4 @@
-# AWS Data Center
+# AWS Desktop Center
 
 Aplicación de escritorio estilo Kodi para gestionar servicios de datos en AWS.  
 Desarrollada con **Tauri 2 + Rust** (backend) y **Vanilla JS** (frontend).
@@ -46,8 +46,8 @@ Desarrollada con **Tauri 2 + Rust** (backend) y **Vanilla JS** (frontend).
 ## Ejecución rápida (binario precompilado)
 
 ```bash
-chmod +x bin/aws-data-center
-./bin/aws-data-center
+chmod +x bin/aws-desktop-center
+./bin/aws-desktop-center
 ```
 
 > **Nota para WSL2/WSLg**: Se recomienda usar el binario de `bin/` en lugar del AppImage, ya que este último puede presentar problemas con el cursor del mouse debido a conflictos con las librerías GTK embebidas en WSLg. En Linux nativo de escritorio, el AppImage funciona correctamente.
@@ -56,7 +56,7 @@ chmod +x bin/aws-data-center
 
 ```bash
 cargo build --release
-./target/release/aws-data-center
+./target/release/aws-desktop-center
 ```
 
 ## Desarrollo
@@ -98,7 +98,7 @@ Si las credenciales temporales expiran, la app muestra un mensaje indicando que 
 ├── tauri.conf.json             # Tauri configuration
 ├── Cargo.toml                  # Rust dependencies
 └── bin/
-    └── aws-data-center         # Binario precompilado (Linux x86_64)
+    └── aws-desktop-center         # Binario precompilado (Linux x86_64)
 ```
 
 ## Stack técnico
@@ -131,7 +131,7 @@ La implementación del código fue asistida por **Kiro CLI** (AWS), un agente de
 
 ## Visión
 
-AWS Data Center aspira a ser una alternativa open source y liviana a [Commandeer](https://getcommandeer.com/), enfocada en servicios de datos. La estrategia es crear aplicaciones por dominio (Data, Compute, Networking, etc.) para mantener cada app pequeña, rápida y enfocada en un nicho específico de IT.
+AWS Desktop Center aspira a ser una alternativa open source y liviana a [Commandeer](https://getcommandeer.com/), enfocada en servicios de datos. La estrategia es crear aplicaciones por dominio (Data, Compute, Networking, etc.) para mantener cada app pequeña, rápida y enfocada en un nicho específico de IT.
 
 ## Licencia
 

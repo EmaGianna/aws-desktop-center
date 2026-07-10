@@ -26,11 +26,24 @@ body { font-family: 'Segoe UI', sans-serif; background: var(--bg-primary); color
 .sidebar-header { padding: 0 1.2rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
 .sidebar-header h2 { font-size: 1rem; color: var(--accent); }
 .profile-badge { font-size: 0.75rem; color: var(--text-secondary); }
-.sidebar-menu { list-style: none; flex: 1; padding: 1rem 0; }
+
+.sidebar-search { margin: 1rem 1.2rem 0; padding: 0.5rem 0.8rem; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: var(--text-primary); font-size: 0.8rem; }
+.sidebar-search:focus { outline: none; border-color: var(--accent); }
+
+.sidebar-categories { flex: 1; overflow-y: auto; padding-top: 0.5rem; }
+.sidebar-category-header { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 1.2rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); cursor: pointer; transition: var(--transition); }
+.sidebar-category-header:hover { color: var(--text-primary); }
+.sidebar-category-chevron { font-size: 0.65rem; }
+
+.sidebar-menu { list-style: none; padding: 0; }
 .sidebar-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.8rem 1.2rem; cursor: pointer; transition: var(--transition); border-left: 3px solid transparent; }
 .sidebar-item:hover, .sidebar-item.active { background: rgba(233,69,96,0.1); border-left-color: var(--accent); }
 .logout-btn { margin: 1rem 1.2rem; padding: 0.6rem; background: transparent; border: 1px solid var(--text-secondary); border-radius: 8px; color: var(--text-secondary); cursor: pointer; transition: var(--transition); }
 .logout-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Services not covered by Floci/MiniStack emulators (doc/en/emulated-services-analysis.md) */
+.unsupported-badge { margin-left: auto; color: #ff9800; font-size: 0.75rem; }
+.service-tile .unsupported-badge { margin-left: 0; margin-top: 0.4rem; font-size: 0.65rem; }
 
 /* Content */
 .content-area { flex: 1; padding: 2rem; overflow-y: auto; animation: fadeIn 0.4s ease; }
@@ -652,6 +665,12 @@ tr:hover td { background: rgba(233,69,96,0.05); }
 /* EventBridge */
 .eb-state-enabled, .eb-state-\"enabled\" { color: #4caf50; }
 .eb-state-disabled, .eb-state-\"disabled\" { color: #ff9800; }
+
+/* Inspector2 finding severity */
+.severity-critical, .severity-high { color: var(--accent); }
+.severity-medium { color: #ff9800; }
+.severity-low, .severity-informational { color: #4caf50; }
+.severity-untriaged { color: var(--text-secondary); }
 
 /* Glue Trigger states */
 .glue-status-activated, .glue-status-\"activated\" { color: #4caf50; }

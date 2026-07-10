@@ -1,10 +1,10 @@
 # Functional Documentation
 
-## AWS Data Center — User Guide
+## AWS Desktop Center — User Guide
 
 ### Getting Started
 
-1. Launch the application (`./aws-data-center` on Linux or `aws-data-center.exe` on Windows)
+1. Launch the application (`./aws-desktop-center` on Linux or `aws-desktop-center.exe` on Windows)
 2. Select an AWS profile from the list (profiles are read from `~/.aws/credentials` and `~/.aws/config`)
 3. Navigate services using the sidebar or the tile grid on the home screen
 

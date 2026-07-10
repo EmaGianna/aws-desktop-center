@@ -1,14 +1,14 @@
 {
-  "productName": "AWS_Data_Center",
+  "productName": "AWS_Desktop_Center",
   "version": "0.1.0",
-  "identifier": "com.awsdatacenter.rust",
+  "identifier": "com.awsdesktopcenter.rust",
   "build": {
     "frontendDist": "./ui"
   },
   "app": {
     "windows": [
       {
-        "title": "AWS Data Center",
+        "title": "AWS Desktop Center",
         "width": 1280,
         "height": 720,
         "resizable": true,

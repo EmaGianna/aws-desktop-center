@@ -1,10 +1,10 @@
 # Documentación Funcional
 
-## AWS Data Center — Guía de Usuario
+## AWS Desktop Center — Guía de Usuario
 
 ### Inicio Rápido
 
-1. Ejecutar la aplicación (`./aws-data-center` en Linux o `aws-data-center.exe` en Windows)
+1. Ejecutar la aplicación (`./aws-desktop-center` en Linux o `aws-desktop-center.exe` en Windows)
 2. Seleccionar un perfil AWS de la lista (se leen de `~/.aws/credentials` y `~/.aws/config`)
 3. Navegar los servicios usando el sidebar o el grid de tiles en la pantalla principal
 
