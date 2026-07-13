@@ -200,12 +200,20 @@ function isUnsupported(service) {
 function renderApp() {
   const profileInfo = state.profileInfo || {};
   const emulatedBadge = profileInfo.is_emulated ? `<span class="emulated-badge">EMULATED: ${profileInfo.endpoint_url}</span>` : '';
+  const regionBadge = `<span class="region-badge">${profileInfo.region || 'us-east-1'}</span>`;
+  const regionWarning = profileInfo.region_configured ? '' : `
+    <div class="region-warning">
+      <strong>[!] No region configured for profile "${state.profile}"</strong><br/>
+      Using default: <code>${profileInfo.region || 'us-east-1'}</code>. Add this to <code>~/.aws/config</code> to set it explicitly:
+      <pre>${state.profile === 'default' ? '[default]' : `[profile ${state.profile}]`}\nregion = ${profileInfo.region || 'us-east-1'}</pre>
+    </div>`;
   const categories = groupByCategory(SERVICES);
 
   document.getElementById('root').innerHTML = `
     <div class="app-container">
       <nav class="sidebar">
-        <div class="sidebar-header"><h2>AWS Desktop Center</h2><span class="profile-badge">${state.profile}</span>${emulatedBadge}</div>
+        <div class="sidebar-header"><h2>AWS Desktop Center</h2><span class="profile-badge">${state.profile}</span>${regionBadge}${emulatedBadge}</div>
+        ${regionWarning}
         <input type="text" class="sidebar-search" id="sidebar-search" placeholder="Search services..." />
         <div class="sidebar-categories" id="sidebar-categories">
           ${categories.map(({ category, items }) => `

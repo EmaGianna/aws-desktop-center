@@ -1,76 +1,81 @@
-# Resumen Ejecutivo
+# Resumen ejecutivo
 
-## AWS Desktop Center — Aplicación de Escritorio para Servicios de Datos en AWS
+## AWS Desktop Center
 
-### Descripción General
+AWS Desktop Center es una aplicación de escritorio open source para explorar y operar recursos de AWS desde una única interfaz gráfica. Combina un backend nativo en Rust, el SDK oficial de AWS para Rust y un frontend liviano en HTML, CSS y JavaScript empaquetado con Tauri 2.
 
-AWS Desktop Center es una aplicación de escritorio liviana que proporciona una interfaz visual estilo Kodi para gestionar servicios de datos en AWS. Permite a ingenieros de datos, analistas y equipos DevOps interactuar con recursos de AWS a través de una interfaz gráfica intuitiva, eliminando la necesidad de alternar entre múltiples pestañas del navegador o memorizar comandos CLI.
+El proyecto actual ya no está limitado a servicios de datos. Expone **73 módulos de servicios organizados en 10 dominios**: Almacenamiento, Bases de datos, Analítica, Cómputo, Redes, Seguridad, Monitoreo, Mensajería, Gobernanza y Costos.
 
-### Problema
+## El problema que resuelve
 
-Gestionar servicios de datos en AWS típicamente requiere:
-- Navegar la consola de AWS entre múltiples pestañas y servicios
-- Memorizar comandos de AWS CLI y sus parámetros
-- Cambiar constantemente de contexto entre diferentes herramientas
+El trabajo cotidiano en AWS suele repartirse entre la consola web, comandos de CLI, scripts y herramientas específicas. Esto genera fricción cuando un operador necesita inspeccionar varios servicios, seguir relaciones entre recursos o ejecutar una acción operativa breve. La consola de AWS es completa, pero depende del navegador y su navegación y flujos varían entre servicios.
 
-Esto genera fricción en los flujos de trabajo diarios, especialmente para equipos que gestionan pipelines de datos complejos entre S3, Glue, Athena, DynamoDB y otros servicios.
+AWS Desktop Center ofrece una alternativa enfocada para tareas frecuentes de consulta y administración:
 
-### Solución
+- un único punto de entrada de escritorio para varias cuentas de AWS y emuladores locales;
+- navegación consistente entre familias de servicios;
+- acceso rápido a inventarios, detalles, logs, resultados de consultas y controles operativos;
+- ausencia de runtime de Node.js y de una cadena de build para el frontend;
+- uso local de los archivos estándar de credenciales y configuración de AWS.
 
-AWS Desktop Center consolida 10 servicios de datos de AWS en una única aplicación de escritorio rápida con:
-- **Navegación unificada** — Todos los servicios accesibles desde un sidebar
-- **Exploración visual** — UI basada en tiles para navegar recursos
-- **Acciones rápidas** — Upload, download, query, invoke y gestión directa de recursos
-- **Gestión de credenciales** — Lee perfiles AWS de la configuración local
-- **Multiplataforma** — Funciona en Linux, Windows y WSL2
+Es una herramienta operativa complementaria, no un reemplazo completo de la consola de AWS, la infraestructura como código o AWS CLI. Cada módulo implementa intencionalmente un subconjunto útil de la API del servicio.
 
-### Características Principales
+## Experiencia de uso
 
-![Selección de Perfil](../../img/AWS%20Data%20Center%20(Ubuntu)%20-start.png)
-*Pantalla de selección de perfil*
+Al iniciar, la aplicación descubre perfiles en `~/.aws/credentials` y `~/.aws/config`. El usuario selecciona uno e ingresa a un espacio de trabajo oscuro, inspirado en un media center. Una barra lateral con buscador y un tablero de mosaicos agrupan los servicios por dominio. Las categorías pueden contraerse, el perfil seleccionado permanece visible y los perfiles con un endpoint personalizado muestran una insignia **EMULATED**.
 
-![Menú Principal](../../img/AWS%20Data%20Center%20(Ubuntu)%20-%20main_menu.png)
-*Menú principal con tiles de servicios*
+La aplicación permite exploración de sólo lectura y también acciones seleccionadas de escritura y ciclo de vida. Por ejemplo: subir y mover objetos S3, iniciar y detener recursos de cómputo, ejecutar consultas en Athena o Redshift, invocar funciones Lambda, administrar colas y tópicos, trabajar con identidades IAM, actualizar etiquetas e inspeccionar costos. Las acciones destructivas expuestas por los módulos utilizan diálogos de confirmación en la interfaz.
 
-| Capacidad | Descripción |
-|-----------|-------------|
-| Multi-servicio | S3, DynamoDB, RDS, Redshift, Glue, Athena, Lambda, CloudWatch, EventBridge, Lake Formation |
-| Liviana | Binario de ~60MB, ~30-50MB de uso de RAM |
-| Segura | Las credenciales nunca salen de la máquina local |
-| Rápida | Inicio instantáneo, rendimiento nativo |
-| Portable | Un solo binario, no requiere instalación |
+## Alcance por dominio
 
-### Usuarios Objetivo
+| Dominio | Módulos incluidos |
+|---|---|
+| Almacenamiento | S3, EBS, EFS, AWS Backup, S3 Tables, S3 Vectors, S3 Files, Transfer Family |
+| Bases de datos | DynamoDB, RDS, Redshift, ElastiCache, MemoryDB, DocumentDB, Neptune, OpenSearch, RDS Data API |
+| Analítica | Glue, Athena, Kinesis, Data Firehose, EMR, MSK (Kafka) |
+| Cómputo | Lambda, EC2, ECS, ECR, EKS, AWS Batch, CodeBuild, Elastic Beanstalk, CodeDeploy, CodePipeline |
+| Redes | VPC, API Gateway REST, API Gateway v2, Route 53, CloudFront, CloudFront KeyValueStore, Elastic Load Balancing v2, AppSync, Cloud Map |
+| Seguridad | IAM, STS, Secrets Manager, SSM Parameter Store, KMS, Cognito, ACM, WAF v2, Inspector |
+| Monitoreo | CloudWatch |
+| Mensajería | EventBridge, SQS, SNS, Step Functions, EventBridge Scheduler, EventBridge Pipes, Amazon MQ, SES, IoT Core |
+| Gobernanza | Lake Formation, CloudFormation, Auto Scaling, AppConfig, Resource Groups Tagging, AWS Config, CloudTrail, Organizations, Account |
+| Costos | Cost Explorer, Pricing, Cost & Usage Reports |
 
-- Ingenieros de Datos gestionando pipelines ETL (Glue, Athena, S3)
-- Administradores de Bases de Datos monitoreando clusters RDS/Redshift
-- Ingenieros DevOps gestionando funciones Lambda y arquitecturas event-driven
-- Analistas de Datos ejecutando queries en Athena y explorando catálogos de datos
-- Equipos de Plataforma supervisando la gobernanza con Lake Formation
+Las operaciones exactas disponibles en cada módulo se describen en la [Documentación funcional](documentacion-funcional.md).
 
-### Stack Tecnológico
+## Usuarios objetivo
 
-- **Backend**: Rust + AWS SDK for Rust
-- **Frontend**: Vanilla JavaScript (cero dependencias de frameworks)
-- **Framework de escritorio**: Tauri 2 (webview nativo, sin Chromium embebido)
+- ingenieros cloud y administradores de AWS que necesitan un inventario visual rápido;
+- desarrolladores que quieren inspeccionar u operar recursos sin componer comandos de CLI;
+- equipos DevOps, de plataforma, datos, seguridad y FinOps que trabajan con varios dominios;
+- personas en formación que se benefician de ver los recursos agrupados en una interfaz consistente;
+- equipos que usan emuladores locales compatibles con AWS mediante un endpoint configurado por perfil.
 
-### Valor de Negocio
+## Arquitectura y tecnología
 
-- **Menos cambio de contexto** — Una app en lugar de 10+ pestañas de consola
-- **Operaciones más rápidas** — Acciones directas sin navegar la consola AWS
-- **Menor uso de recursos** — Mínimo consumo de CPU/RAM
-- **Seguridad** — Sin UI en la nube, credenciales permanecen locales
-- **Accesibilidad** — Funciona en Windows (nativo + WSL2) y Linux
+- **Runtime de escritorio:** Tauri 2 y el webview nativo del sistema operativo.
+- **Backend:** Rust 2021 con clientes asíncronos del SDK de AWS.
+- **Frontend:** módulos ES nativos, HTML y CSS; sin framework ni paso de compilación.
+- **Comunicación:** comandos Tauri tipados, invocados desde JavaScript mediante IPC local.
+- **Autenticación:** cadena estándar de credenciales del SDK de AWS, seleccionada por perfil.
+- **Distribución:** compilación desde fuente, empaquetado AppImage para Linux y ejecutables precompilados para Linux y Windows en `bin/`.
 
-### Estado Actual
+El frontend nunca recibe las credenciales de AWS. Las solicitudes las realiza el proceso Rust local y la autorización sigue gobernada por los permisos IAM del perfil elegido. La [Documentación técnica](documentacion-tecnica.md) detalla la arquitectura y el proceso de compilación.
 
-**Versión 0.1.0 (POC)** — Prueba de concepto funcional con los 10 servicios implementados. Lista para evaluación interna del equipo y recolección de feedback.
+## Limitaciones actuales
 
-### Próximos Pasos
+- El backend lee la región activa desde la sección del perfil seleccionado en `~/.aws/config` y la muestra en la barra lateral. Si el perfil no contiene la clave `region`, la aplicación usa **`us-east-1`** como fallback y presenta una advertencia de configuración. Los cambios de región se realizan en el perfil de AWS, no mediante un selector dentro de la aplicación.
+- La cobertura de los servicios es intencionalmente parcial. Que un módulo aparezca en la interfaz no significa que exponga toda la API de AWS.
+- Un perfil con `endpoint_url` en `~/.aws/config` dirige los clientes SDK compatibles a ese endpoint. La cobertura depende del emulador; la interfaz marca explícitamente Redshift y Lake Formation como no soportados en modo emulado.
+- El repositorio no incluye por el momento una suite automatizada de pruebas ni un flujo de CI.
+- Las acciones se ejecutan con los permisos del perfil seleccionado y pueden afectar recursos reales y generar costos.
 
-- Feedback de usuarios e iteración sobre UI/UX
-- Integraciones adicionales (Step Functions, SQS, SNS)
-- Selector de región para entornos multi-región
-- Navegación por teclado (flechas + Enter, estilo Kodi)
-- Auto-refresh para vistas de monitoreo
-- Syntax highlighting para visualización de código
+## Valor y dirección
+
+AWS Desktop Center reduce el cambio de contexto y ofrece una base de código compacta, auditable y multiplataforma. La estructura modular del backend y el frontend permite incorporar operaciones de nuevos servicios sin adoptar un framework web pesado.
+
+La dirección del proyecto es crecer como un centro amplio de operaciones de AWS para escritorio, conservando tres cualidades: bajo peso local, uso transparente de las credenciales estándar de AWS y flujos enfocados, sin intentar reproducir cada pantalla de la consola web.
+
+## Estado del proyecto
+
+El repositorio identifica la aplicación como **AWS Desktop Center**, el paquete y binario como `aws-desktop-center`, versión `0.1.0`, bajo licencia MIT. Debe considerarse una herramienta operativa en etapa temprana: útil actualmente, pero que requiere pruebas conscientes de permisos en cada cuenta y emulador de destino antes de utilizarse en producción.

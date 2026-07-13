@@ -700,3 +700,36 @@ tr:hover td { background: rgba(233,69,96,0.05); }
   color: #ff9800;
   word-break: break-all;
 }
+
+/* Active AWS region badge */
+.region-badge {
+  display: block;
+  margin-top: 0.4rem;
+  padding: 0.2rem 0.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  font-size: 0.6rem;
+  color: var(--text-secondary);
+  width: fit-content;
+}
+
+/* Warning shown when a profile has no region set in ~/.aws/config */
+.region-warning {
+  margin: 0 1.2rem 1rem;
+  padding: 0.6rem 0.8rem;
+  background: rgba(255, 152, 0, 0.1);
+  border: 1px solid #ff9800;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+.region-warning pre {
+  margin: 0.4rem 0 0;
+  padding: 0.4rem 0.5rem;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  white-space: pre-wrap;
+}

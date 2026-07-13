@@ -1,4 +1,4 @@
-use super::get_endpoint_url;
+use super::{get_endpoint_url, get_region, DEFAULT_REGION};
 use serde::Serialize;
 use std::fs;
 
@@ -7,6 +7,8 @@ pub struct ProfileInfo {
     pub name: String,
     pub endpoint_url: String,
     pub is_emulated: bool,
+    pub region: String,
+    pub region_configured: bool,
 }
 
 #[tauri::command]
@@ -34,9 +36,12 @@ pub fn get_profiles() -> Vec<String> {
 #[tauri::command]
 pub fn get_profile_info(profile: String) -> ProfileInfo {
     let endpoint = get_endpoint_url(&profile);
+    let region = get_region(&profile);
     ProfileInfo {
-        name: profile,
         is_emulated: endpoint.is_some(),
         endpoint_url: endpoint.unwrap_or_default(),
+        region_configured: region.is_some(),
+        region: region.unwrap_or_else(|| DEFAULT_REGION.to_string()),
+        name: profile,
     }
 }
